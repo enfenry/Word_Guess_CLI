@@ -28,17 +28,42 @@ class Word {
             return word;
         }
         this.check = function (guessChar) {
+            let letterCorrect = false;
             this.letters.forEach(letter => {
-                letter.check(guessChar);
+                let letterCheck = letter.check(guessChar);
+                if (letterCheck) {
+                    letterCorrect = true;
+                }
             });
+            return letterCorrect;
+        }
+        this.guessed = function() {
+            let isGuessed = true;
+            this.letters.forEach(letter => {
+                if (!letter.guessed) {
+                    isGuessed = false;
+                }
+            });
+            return isGuessed;
         }
     }
 }
 
-let testWord = new Word('Roosevelt');
+module.exports = Word;
 
-testWord.check('R');
-testWord.check('e');
+// let testWord = new Word('Roosevelt');
 
+// testWord.check('R');
+// testWord.check('O');
+// testWord.check('S');
+// testWord.check('E');
+// testWord.check('V');
+// testWord.check('L');
+
+// console.log(testWord.guessed());
+
+// testWord.check('T');
+
+// console.log(testWord.guessed());
 // console.log(testWord);
-console.log(testWord.toString());
+// console.log(testWord.toString());

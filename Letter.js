@@ -24,6 +24,7 @@ class Letter {
             if (guessChar.toLowerCase() === this.character.toLowerCase()) {
                 this.guessed = true;
             }
+            return this.guessed;
         }
     }
 }
