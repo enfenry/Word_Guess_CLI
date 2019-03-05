@@ -31,6 +31,7 @@ class Word {
             let letterCorrect = false;
             this.letters.forEach(letter => {
                 let letterCheck = letter.check(guessChar);
+                // console.log(letter.toString(),letterCheck);
                 if (letterCheck) {
                     letterCorrect = true;
                 }

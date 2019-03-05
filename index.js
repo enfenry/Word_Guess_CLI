@@ -12,43 +12,43 @@ let Word = require('./Word');
 let inquirer = require("inquirer");
 
 let wordArray = ['Nolan', 'Henry'];
-let randomNum = Math.floor(Math.random() * wordArray.length);
-let currentWord = new Word(wordArray[randomNum]);
-
-let roundComplete = false;
+let randomNum = 0;
+let currentWord;
 let wordComplete = false;
-let count = 0;
+let answersLeft = 0;
 
-let initRound = function () {
-    if (roundComplete === false) {
-        inquirer.prompt(
-            {
-                name: "guess",
-                message: "Guess a letter!"
-            }
-        ).then(function (input) {
-            let letterCorrect = currentWord.check(input.guess);
-            console.log(currentWord.toString());
-            if (letterCorrect) {
-                console.log('CORRECT!')
-            }
-            else {
-                console.log('INCORRECT! ' + 10 + ' guesses remaining.')
-            }
-        });
-        roundComplete = true;
-        if (currentWord.guessed()) {
+let initRound = function (word) {
+    return inquirer.prompt(
+        {
+            name: "guess",
+            message: "Guess a letter!"
+        }
+    ).then(function (input) {
+        let letterCorrect = word.check(input.guess);
+        console.log(word.toString());
+        if (letterCorrect) {
+            console.log('CORRECT!')
+        }
+        else {
+            console.log('INCORRECT! ' + answersLeft + ' guesses remaining.')
+        }
+        if (word.guessed()) {
+            console.log('You got it right! Next word:')
             wordComplete = true;
         }
-        initRound();
-    }
-    // else {
-    //     for (var x = 0; x < programmerArray.length; x++) {
-    //       programmerArray[x].printInfo();
-    //     }
-    //   }
+    });
 };
 
-initRound();
+async function run() {
+    randomNum = Math.floor(Math.random() * wordArray.length);
+    currentWord = new Word(wordArray[randomNum]);
+    wordComplete = false;
+    answersLeft = 10;
+    console.log(currentWord.toString());
+    do {
+        await initRound(currentWord);
+    } while (!wordComplete && answersLeft > 0);
+    run();
+}
 
-
+run();

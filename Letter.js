@@ -21,10 +21,11 @@ class Letter {
             }
         }
         this.check = function (guessChar) {
-            if (guessChar.toLowerCase() === this.character.toLowerCase()) {
+            let letterCorrect = guessChar.toLowerCase() === this.character.toLowerCase();
+            if (letterCorrect) {
                 this.guessed = true;
             }
-            return this.guessed;
+            return letterCorrect;
         }
     }
 }
